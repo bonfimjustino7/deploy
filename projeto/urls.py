@@ -19,5 +19,8 @@ from proj import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index)
+    path('', views.index),
+    path('cadastrar/', views.cadastro_user),
+    path('cadastrar', views.cadastrar),
+    path('logout', views.logout)
 ]

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cadastro de Usuários</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<meta charset="utf-8">
+	<style type="text/css">
+		h3{
+			font-size: 19px;
+			color: #f5dd5d;
+			font-weight: 200;
+			font-family: "Verdana";
+		}
+
+		.col{
+			margin-top: 15px;
+		}
+
+		.container-fluid{
+			background-color: #417690;
+			height: 60px;
+		}
+		form{
+			margin-bottom: 30px;
+			margin-top: 30px;
+		}
+		strong{
+			color: red;
+		}	
+		a ,li{
+			color: #fff;
+		}
+		.navegacao{
+			background-color: #79aec8;
+			height: 40px;
+		}
+		.nav ul{
+			list-style: none;
+			margin-top: 7px;
+		}
+		ul li{
+			float: left;
+			margin-right: 7px;
+		}	
+	</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="container">
+			<div class="row">
+				<div class="col col-md-8">
+					<h3>Cadastrar novo Usuário</h3>
+				</div>
+				<div class="col col-md-4">
+					<a href="/admin/logout">Encerrar sessão Administração do Site</a>		
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	<div class="container-fluid navegacao">
+		<div class="container nav">
+			<ul>
+				<li><a href="/admin/">Inicio </a>></li>
+				<li><a href="/admin/auth/">Autenticação e Autorização </a>></li>
+				<li><a href="/admin/auth/user/">Usuarios </a>></li>
+				<li><a href="/cadastrar/">Cadastro </a></li>
+			</ul>
+		</div>
+		{% if messages %}
+			{% for message in messages %}
+				{% if message.tags == "warning" %}
+					<div class="alert alert-danger alert-dismissible fade show" role="alert">
+		  				{{message}}
+		  		  		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		    				<span aria-hidden="true">&times;</span>
+		  				</button>	
+					</div>
+				{% endif %}
+			{% endfor %}
+		{% endif%}
+
+	</div>
+	<div class="container">
+	<form action="/cadastrar" method="POST">{% csrf_token %}
+		  <div class="form-row">
+		    <div class="form-group col-md-4">
+		      <label for="inputEmail4">Usuário <strong>*</strong></label>
+		      <input type="text" class="form-control" id="inputEmail4" placeholder="Usuário" name="usuario" required="">
+		    </div>
+		    <div class="form-group col-md-4">
+		      <label for="inputPassword4">Senha <strong>*</strong></label>
+		      <input type="password" class="form-control" id="inputPassword4" placeholder="Senha" name="senha" required="">
+		    </div>
+		  </div>
+		  <div class="form-row">
+			  <div class="form-group col-md-4">
+			    <label for="inputAddress">Primeiro Nome</label>
+			    <input type="text" class="form-control" id="inputAddress" placeholder="Ex: Carlos" name="p_nome">
+			  </div>
+			  <div class="form-group col-md-4">
+			    <label for="inputAddress2">Último Nome</label>
+			    <input type="text" class="form-control" id="inputAddress2" placeholder="Ex: Peixoto" name="u_nome">
+			  </div>
+		</div>
+		  <div class="form-row">
+		    <div class="form-group col-md-8">
+		      <label for="inputEmail">Email</label>
+		      <input type="email" class="form-control" id="inputEmail" name="email" placeholder="example@email.com">
+		    </div>
+		  </div>
+
+		  <div class="form-group">
+		    <div class="form-check">
+		      <input class="form-check-input" type="checkbox" id="gridCheck">
+		      <label class="form-check-label" for="gridCheck">
+		        Manter-me conectado
+		      </label>
+		    </div>
+		  </div>
+		  <button type="submit" class="btn btn-primary">Cadastrar</button>
+		</form>
+		{% if messages%}
+			{% for message in messages %}
+				{% if message.tags == "error" %}
+					<div class="alert alert-danger alert-dismissible fade show" role="alert">
+		  				{{message}}
+		  		  		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		    				<span aria-hidden="true">&times;</span>
+		  				</button>	
+					</div>
+				{% elif message.tags == "success" %}
+					<div class="alert alert-success alert-dismissible fade show" role="alert">
+		  				{{message}}
+		  		  		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		    				<span aria-hidden="true">&times;</span>
+		  				</button>	
+					</div>
+				{% endif %}	
+			{% endfor %}
+		{% endif %}
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>
