@@ -1,14 +1,19 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-
+from django.contrib.auth.decorators import permission_required
 
 # Create your views here.
+@permission_required('proj.add_ped', login_url='/cadastrar/')
 def index(request):
+	user = get_object_or_404(User, username=request.user)
+	perm = user.has_perm('proj.add_ped')
+	print(perm)
 	return HttpResponse('<h1>Bem vindo</h1>')
+
 
 @login_required(login_url='/admin') #verifica o suario
 def cadastro_user(request):
@@ -28,16 +33,6 @@ def cadastro_user(request):
 
 @login_required(login_url='/admin')
 def cadastrar(request):
-	user_session = request.user #retorna o usuario atual
-	user = User.objects.get(username=user_session)
-	print(user.is_superuser)
-
-	if user.is_superuser == True:
-	 	print('Permissao concedida', user)
-	else:
-		#messages.warning(request,'Usuário não tem Permissao')
-		return HttpResponse('{} você não tem permissao para cadastrar'.format(str(user).capitalize()))
-
 	if request.POST:
 		usuario = request.POST['usuario']
 		email = request.POST['email']
@@ -67,3 +62,6 @@ def cadastrar(request):
 
 def logout(request):
 	logout(request)
+
+
+
